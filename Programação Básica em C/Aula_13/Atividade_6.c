@@ -35,7 +35,7 @@ int main(void)
     {
         //Leitura do cargo
         printf("\nInsira o cargo do funcionario %d:\n", i + 1);
-        scanf("%s", position);
+        scanf("%49s", position);
         for (int i = 0; position[i] != 0; i++)
         {
             position[i] = toupper((unsigned char)position[i]);
