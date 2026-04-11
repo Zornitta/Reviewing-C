@@ -1,0 +1,26 @@
+
+ Toda variável que é declarada ocupa um espaço na memória RAM, e esse espaço tem um endereço.
+
+  int x = 10;
+   
+x  -> o valor de 10;
+&x -> o endereço de x na memória (ex: 0x7ffd5e);
+ 
+ Um ponteiro é uma variável que armazena esse endereço:
+
+ int *prt = &x;  //prt guarda o endereço de x
+
+ptr  -> endereço de x;
+*ptr -> o valor que está nesse endereço (10) - isso se chama "Dereferenciar";
+
+
+    Dois operadores, sem confusão:
+
+    Símbolo             Onde aparece                       O que faz
+
+    &                   &x                                 Pega o endereço de x.
+    *                   Na declaração int *ptr.            Diz que ptr é um ponteiro.
+    *                   No uso *ptr.                       Acessa o valor no endereço.
+
+
+FIM;
