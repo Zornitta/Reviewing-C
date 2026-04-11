@@ -1,0 +1,25 @@
+
+ Teória Rápida - Structs
+
+Um struc é uma ferramenta de agrupar váriaveis de tipos diferentes sob um mesmo nome:
+
+ 
+ struct Aluno {
+    char nome[50];
+    int idade;
+    float nota;
+ };
+
+Para usar:
+ 
+ struct Aluno a1;            //declara
+ a1.idade = 20;              //acesso com ponto
+ a1.nota = 8.5;
+
+Com ponteiro, o acesso muda de . para ->:
+
+ struct Aluno *ptr = &a1;
+ ptr->idade = 20;            //equivalente a (*ptr).idade = 20
+
+
+FIM;
