@@ -1,0 +1,39 @@
+Aula 17 - Ponteiros e Structs unidos
+
+1. Revisão
+
+    -Ponteiros armazenam endereços de memória
+    -Structs agrupam variáveis de tipos diferentes
+    -Acesso direto: variavel.campo
+    -Acesso via ponteiro: ponteiro->campo
+
+
+2. Ponteiro de Struct
+
+    struct Product p1;
+    struct Product *ptr = &p1
+    ptr->price = 9.99;          // equivalente a *(ptr).price = 9.99;
+
+
+3. Passando Struct para Função Via Ponteiro
+
+    -Por valor: void func(struct Product p)
+    -> cria uma cópia, alterações não afetam original
+
+    -Por ponteiro: void func(struct Product *p)
+    -> acessa o original, alterações persistem
+
+
+4. Vetor de Structs com Ponteiro
+
+    struct Product store[10];
+    func(&store[i]);            // passa o endereço do elemento i
+
+
+5. Aritmética de Ponteiros com Structs
+
+    struct Product *ptr = store;
+    (ptr + i)->price;           // acessa o elemento i via ponteiro
+
+
+FIM
