@@ -1,0 +1,70 @@
+Stack vs Heap — ciclo de vida da memória
+
+--------------------------
+Quando seu programa roda, o sistema operacional separa a memória em regiões distintas.
+ As duas que mais importam pra você agora são a Stack e o Heap.
+
+
+ Stack (pilha)
+
+A Stack é gerenciada automaticamente pelo compilador. Toda vez que você entra em uma função, um bloco chamado
+stack frame é empurrado na pilha. Quando a função retorna, esse frame é destruído — e todas as variáveis locais vão junto.
+
+Características da Stack:
+
+Alocação e liberação são automáticas — o compilador gera o código
+Rápida — é só mover um ponteiro de pilha
+Limitada — tipicamente 1–8 MB. Estourar isso é o famoso stack overflow
+Variáveis não existem mais depois que a função retorna
+
+Repara no seu projeto: int choice, int amount, int exist — todos na Stack. Somem quando a função termina.
+
+-------------------------
+
+Heap (monte)
+O Heap é uma região de memória muito maior, gerenciada manualmente por você. Você pede memória com malloc, usa, e é sua responsabilidade devolver com free.
+O compilador não faz isso por você.
+
+-c
+
+// Stack: compilador controla
+int x = 10;          // nasce aqui
+// ... x morre quando a função retorna
+
+// Heap: VOCÊ controla
+int *p = malloc(sizeof(int));  // você alocou
+*p = 10;
+free(p);                        // você precisa liberar
+-------------------------------------------------------
+
+Características do Heap:
+
+Você controla o lifetime completamente — a memória persiste entre chamadas de função
+Grande — pode alocar gigabytes (limitado pela RAM)
+Lento comparado à Stack — o sistema precisa encontrar um bloco livre
+Se você não chamar free, a memória fica ocupada até o programa terminar: isso é um memory leak
+
+-------------------------------
+
+Por que o compilador não pode fazer tudo?
+Porque há situações onde você não sabe o tamanho em tempo de compilação.
+No seu projeto você escreveu:
+
+#define MAX_DISHES 200
+Dish Menu[MAX_DISHES];
+
+Você chutou 200. E se o restaurante tiver 201 pratos? E se tiver só 3 e você desperdiçou memória pra 197?
+Com o Heap, o array cresce conforme a necessidade real.
+
+Resumo visual rápido
+
+----------------- Stack -------------- Heap -------
+
+Quem aloca      Compilador          Você (malloc)
+Quem libera     Compilador          Você (free)
+Tamanho         Pequeno (~MB)       Grande (~GB)
+Velocidade      Muito rápida        Mais lenta
+Risco           Stack overflow      Memory leak
+---------------------------------------------------
+
+FIM

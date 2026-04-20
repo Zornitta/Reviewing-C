@@ -1,0 +1,33 @@
+Fase 3 — Arrays dinâmicos com realloc
+
+No seu projeto atual você tem isso:
+
+ #define MAX_DISHES 200
+ Dish Menu[MAX_DISHES];
+ int total_dishes = 0;
+
+Você reservou 200 slots na Stack na marra.
+O problema já foi discutido — chute fixo. Vamos resolver isso.
+
+ O padrão size + capacity
+
+A ideia central é separar duas informações:
+
+ size — quantos elementos existem de verdade
+ capacity — quantos elementos cabem no bloco atual
+
+Quando size == capacity, você dobra a capacidade com realloc antes de inserir.
+
+ // ao invés disso (estático):
+ Dish Menu[200];
+ int total_dishes = 0;
+
+ // você passa a ter isso (dinâmico):
+ Dish *Menu = NULL;
+ int total_dishes = 0;   // size
+ int capacity = 0;       // capacity
+
+Por que dobrar e não crescer 1 por vez?
+Se você crescesse 1 slot a cada inserção, cada realloc copiaria o array inteiro. Com N elementos
+isso seria N cópias — custo O(N²) total. Dobrando a capacidade, o realloc é chamado cada vez menos.
+Com 1000 elementos você dobrou só ~10 vezes. O custo total amortizado vira O(1) por inserção.

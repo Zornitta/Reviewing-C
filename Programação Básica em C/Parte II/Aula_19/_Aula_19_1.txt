@@ -1,0 +1,80 @@
+Fase 2.1 — malloc, calloc, realloc e free
+
+São quatro funções da stdlib.h. Cada uma tem um propósito distinto
+e saber escolher a certa evita bugs silenciosos.
+
+-------
+
+malloc — memory allocate
+
+Aloca um bloco de N bytes e retorna um ponteiro para ele.
+O conteúdo é lixo — o que estiver na memória naquele momento.
+
+ Dish *prato = malloc(sizeof(Dish));
+
+ if (prato == NULL) {
+    printf("Erro: memoria insuficiente!\n");
+    return;
+ }
+
+ // conteúdo é lixo até você escrever algo
+ strcpy(prato->name, "MARGHERITA");
+ prato->price = 35.90;
+
+Sempre cheque se o retorno é NULL.
+Em sistemas com pouca memória, o malloc pode falhar.
+------
+
+calloc — cleared allocate
+Aloca N elementos de tamanho T e zera tudo.
+Ideal pra arrays onde você quer garantir que começa limpo.
+
+ // malloc: aloca 10 ints com lixo dentro
+ int *a = malloc(10 * sizeof(int));
+
+ // calloc: aloca 10 ints todos zerados
+ int *b = calloc(10, sizeof(int));
+
+A assinatura é diferente — recebe quantidade e tamanho separados.
+Internamente faz quantidade × tamanho e zera o bloco.
+--------
+
+realloc — reallocate
+Redimensiona um bloco já existente. É a função que vai fazer
+o seu menu crescer dinamicamente na Fase 3.
+
+int *arr = malloc(5 * sizeof(int));   // 5 ints
+
+// precisa de mais espaço
+int *tmp = realloc(arr, 10 * sizeof(int));  // tenta crescer pra 10
+
+ if (tmp == NULL) {
+    // arr ainda é válido! não perdemos nada
+    free(arr);
+    return;
+ }
+
+ arr = tmp;  // só atualiza arr se funcionou
+
+Tem um detalhe crítico aqui:
+
+O realloc pode mover o bloco para um endereço completamente diferente.
+Por isso o padrão seguro é sempre salvar em um ponteiro temporário tmp antes de atribuir de volta.
+---------
+
+free — liberar
+Devolve a memória ao sistema. Simples, mas com duas regras que
+se violadas causam comportamento indefinido:
+
+ free(prato);      // correto
+
+ free(prato);      // ERRADO: double free — comportamento indefinido
+ free(NULL);       // seguro: free em NULL não faz nada
+
+ int x = 10;
+ free(&x);         // ERRADO: nunca libere memória da Stack
+
+Boa prática após liberar:
+ free(prato);
+ prato = NULL;    // evita usar o ponteiro por acidente depois
+

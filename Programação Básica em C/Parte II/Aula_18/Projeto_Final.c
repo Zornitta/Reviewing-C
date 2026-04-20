@@ -26,8 +26,7 @@ typedef struct {
 } Order;
 
 Dish Menu[MAX_DISHES];
-Order Today_Orders[MAX_REQUEST_ORDER];
-
+Order Item[MAX_REQUEST_ORDER];
 int total_dishes = 0;
 
 
@@ -261,7 +260,7 @@ int main(void)
                 list_dishes(Menu);
                 break;
             case 5:
-                order_dish(Menu, &Today_Orders[0]);
+                order_dish(Menu, &Item[0]);
                 break;
             default:
                 printf("Numero inserido invalido!\n");

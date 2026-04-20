@@ -1,0 +1,64 @@
+O que é um memory leak?
+
+ Acontece quando você aloca memória no Heap e perde o ponteiro
+sem chamar free. A memória fica ocupada até o programa terminar
+— em programas longos isso acumula e pode travar o sistema.
+
+ void leak_example(void)
+ {
+     Dish *new = malloc(sizeof(Dish));
+     // ops... esqueceu o free()
+     // new some quando a função retorna
+     // mas o bloco no Heap continua ocupado
+ }
+
+Valgrind
+O Valgrind é uma ferramenta que monitora toda alocação e liberação do seu programa e te avisa o que vazou.
+Instala com:
+
+sudo apt install valgrind
+
+Pega o código do exercício anterior e remove o free intencionalmente para criar um leak:
+
+ void allocate_dish(void)
+ {
+    Dish *new = malloc(sizeof(Dish));
+
+     if (new == NULL)
+     {
+         printf("ERRO: Memoria Insuficiente!\n");
+         return;
+     }
+
+     strcpy(new->name, "PEPERRONI");
+     strcpy(new->description, "MT BOM");
+     new->price = 109.10;
+
+     printf("Nome: %s\n", new->name);
+     printf("Descricao: %s\n", new->description);
+     printf("Preco: %.2f\n", new->price);
+
+     // free(new);  <-- removido intencionalmente
+ }
+
+Compila com informações de debug e roda no Valgrind:
+
+ gcc -g leak.c -o leak
+ valgrind --leak-check=full ./leak
+
+A saída vai ser algo assim:
+
+HEAP SUMMARY:
+    in use at exit: 152 bytes in 1 blocks
+  total heap usage: 2 allocs, 1 frees, 1,176 bytes allocated
+
+LEAK SUMMARY:
+   definitely lost: 152 bytes in 1 blocks
+
+
+Três termos importantes que vão aparecer:
+definitely lost — ponteiro perdido completamente, sem chance de liberar. É o leak real. No caso 152 bytes = sizeof(Dish) com alinhamento.
+indirectly lost — bloco que só seria alcançável por um ponteiro que já está definitely lost. Acontece em structs com ponteiros internos.
+still reachable — memória que ainda tem um ponteiro válido apontando, mas não foi liberada antes do programa terminar. Tecnicamente não é um leak mas é descuido.
+
+FIM;
