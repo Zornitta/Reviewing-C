@@ -10,7 +10,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "C:\\Users\\Micro\\Desktop\\Reviewing-C\\Programação Básica em C\\output\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}/Programação Básica em C/output/${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
