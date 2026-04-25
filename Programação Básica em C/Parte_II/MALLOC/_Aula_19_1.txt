@@ -3,7 +3,7 @@ Fase 2.1 — malloc, calloc, realloc e free
 São quatro funções da stdlib.h. Cada uma tem um propósito distinto
 e saber escolher a certa evita bugs silenciosos.
 
--------
+-----------------------
 
 malloc — memory allocate
 
@@ -23,8 +23,8 @@ O conteúdo é lixo — o que estiver na memória naquele momento.
 
 Sempre cheque se o retorno é NULL.
 Em sistemas com pouca memória, o malloc pode falhar.
-------
 
+------
 calloc — cleared allocate
 Aloca N elementos de tamanho T e zera tudo.
 Ideal pra arrays onde você quer garantir que começa limpo.
