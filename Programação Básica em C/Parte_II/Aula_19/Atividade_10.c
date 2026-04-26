@@ -21,11 +21,11 @@ void register_students(Student *students, int size)
     {
         printf("\n\n-Aluno %d", i + 1);
         printf("\nNome:\n... ");
-        scanf(" ");
         fgets(students->name, 50, stdin);
         students->name[strcspn(students->name, "\n")] = 0;
         printf("\nNota:\n... ");
         scanf("%f", &students->grade);
+        getchar();
 
         students++;
     }

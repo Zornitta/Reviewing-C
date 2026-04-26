@@ -24,7 +24,7 @@ void allocate_dish(void)
 
     strcpy(new->name, "PEPERRONI");
     strcpy(new->description, "MT BOM");
-    new->price = 109.10;
+    new->price = 120;
 
     printf("Nome: %s\n", new->name);
     printf("Descricao: %s\n", new->description);
